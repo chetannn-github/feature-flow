@@ -7,7 +7,7 @@ A simple **React SDK** to fetch FeatureFlow data using your environment API key.
 ## 🚀 Installation
 
 ```
-npm install FeatureFlow-sdk
+  npm i feature-flow-react-sdk
 ```
 
 
@@ -16,7 +16,7 @@ npm install FeatureFlow-sdk
 
 ```jsx
 import React from "react";
-import useFeatureFlow  from "feature-flow-sdk";
+import {useFeatureFlow}  from 'feature-flow-react-sdk';
 
 export default function App() {
   const { data, loading, error } = useFeatureFlow("YOUR_API_KEY");
@@ -84,17 +84,9 @@ Then `useFeatureFlow` will return:
 Clone and install dependencies:
 
 ```
-git clone https://github.com/your-username/FeatureFlow-sdk.git
-cd FeatureFlow-sdk
+git clone https://github.com/chetannn-github/featureFlow-sdk.git
+cd react-sdk
 npm install
-```
-
-Link package locally for testing in your React app:
-
-```
-npm link
-# inside your React project
-npm link FeatureFlow-sdk
 ```
 
 ---

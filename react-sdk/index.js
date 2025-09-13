@@ -10,7 +10,7 @@ import { baseURL } from "./constant";
  */
 
 
-export default function useFeatureFlow(apiKey) {
+export  function useFeatureFlow(apiKey) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
