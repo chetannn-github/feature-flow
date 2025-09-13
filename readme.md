@@ -37,7 +37,7 @@ This platform is for:
 ### Project Overview
 ![Project](https://github.com/chetannn-github/feature-flow/raw/main/public/project.png)
 
-### Project Overview
+### NPM REACTJS SDK
 ![Project](https://github.com/chetannn-github/feature-flow/raw/main/public/npm.png)
 
 
