@@ -94,9 +94,6 @@ npm start
 
 4. Open the dashboard at https://featureflow.onrender.com/ to configure your project.
 
-## 📩 Support and Contributions
 
-- Open an issue or submit a pull request on [GitHub](Your GitHub Repository here).
-- For questions, contact the maintainers or join the community discussions.
 
 *Empower your development process with smarter feature management using Feature Flow!* 🚀
