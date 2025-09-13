@@ -77,7 +77,7 @@ Use it to fetch environment data easily. Example usage is detailed in the SDK do
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/feature-flow.git
+git clone https://github.com/chetannn-github/feature-flow.git
 cd feature-flow
 ```
 
