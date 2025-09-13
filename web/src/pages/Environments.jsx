@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import api from "../utils/api";
+import ReactJson from '@microlink/react-json-view';
 
 import { 
   Card, CardContent, CardHeader, CardTitle 
@@ -14,7 +15,7 @@ import {
   Trash2, RotateCcw, Eye, EyeOff, Plus, Edit, Save, X, Copy, Database, 
   Check
 } from "lucide-react";
-import ReactJson from "react-json-view";
+
 import ConfirmDialog from "../components/ui/confirm-dialog";
 
 export default function Environments() {
@@ -360,15 +361,15 @@ function openDeleteProjectDialog() {
                                     <div className="font-mono text-sm font-semibold text-primary">{k}</div>
                                     <div className="bg-background rounded-lg p-3 border">
                                       <ReactJson
-                                        src={{ [k]: v.value }}
-                                        theme="rjv-default"
-                                        displayDataTypes={false}
-                                        displayObjectSize={false}
-                                        enableClipboard={true}
-                                        collapsed={false}
-                                        name={false}
-                                        style={{ fontSize: "12px" }}
-                                      />
+  src={{ [k]: v.value }}
+  theme="rjv-default"
+  displayDataTypes={false}
+  displayObjectSize={false}
+  enableClipboard={true}
+  collapsed={false}
+  name={false}
+  style={{ fontSize: '12px' }}
+/>
                                     </div>
                                   </div>
                                   <div className="flex gap-2 items-center">

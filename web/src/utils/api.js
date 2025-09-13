@@ -1,4 +1,4 @@
-const BASE = process.env === "Production" ? "https://feature-flow.onrender.com" : 'http://localhost:4000';
+const BASE = import.meta.env.MODE === "Production" ? "https://feature-flow.onrender.com" : 'http://localhost:4000';
 
 async function handleRes(res) {
  
