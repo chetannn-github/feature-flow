@@ -24,13 +24,6 @@ const Header = () => {
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
-            
-
-            {auth?.token &&<Link to={"/dashboard"} className="text-muted-foreground hover:text-foreground transition-colors">
-              Dashboard
-            </Link>}
-          </nav>
 
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
@@ -44,6 +37,11 @@ const Header = () => {
                 <Button>
                   Get Started
                 </Button>
+            </Link>}
+
+
+            {auth?.token &&<Link to={"/dashboard"} className="text-muted-foreground hover:text-foreground transition-colors">
+                    <Button variant="ghost"> Go to Dashboard</Button>
             </Link>}
 
 
