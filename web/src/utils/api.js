@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000'
+const BASE = process.env === "Production" ? "https://feature-flow.onrender.com" : 'http://localhost:4000';
 
 async function handleRes(res) {
  
