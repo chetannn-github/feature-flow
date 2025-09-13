@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
+import api from "../utils/api";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '../components/ui/card';
 
 import { Flag, Loader2, ArrowLeft } from 'lucide-react';
@@ -17,15 +18,17 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
-    
     e.preventDefault();
     try {
-      if(auth.loading) return ;
+      console.log("login started")
+      // if(auth.loading) return ;
       dispatch(loginStart());
       const res = await api.post('/auth/login', { email, password });
       dispatch(loginSuccess(res));
       navigate('/');
+      console.log("login ended")
     } catch (err) {
+      console.log(err)
       dispatch(loginFailure(err.message || 'Login failed'));
     }
   }
@@ -37,15 +40,7 @@ export default function Login() {
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-blue-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
 
-      <div className="relative w-full max-w-md z-10">
-        <div className="mb-6">
-          <Link to="/">
-            <Button variant="ghost" className="text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
+      <div className="relative w-full max-w-md z-10">ç
 
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -122,7 +117,7 @@ export default function Login() {
               </div>
               <div className="mt-4">
                 <Link
-                  to="/register"
+                  to="/sign-up"
                   className="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
                 >
                   Create an account

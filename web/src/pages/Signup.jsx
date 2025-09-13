@@ -42,14 +42,6 @@ export default function Signup() {
       <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-blue-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
 
       <div className="relative w-full max-w-md z-10">
-        <div className="mb-6">
-          <Link to="/">
-            <Button variant="ghost" className="text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
 
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -140,7 +132,7 @@ export default function Signup() {
               </div>
               <div className="mt-4">
                 <Link
-                  to="/login"
+                  to="/sign-in"
                   className="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
                 >
                   Login here
