@@ -16,6 +16,11 @@
 ### Project Overview
 ![Project](https://github.com/chetannn-github/feature-flow/raw/main/public/project.png)
 
+### Project Overview
+![Project](https://github.com/chetannn-github/feature-flow/raw/main/public/npm.png)
+
+
+
 ### 🌐 **Dashboard:** https://featureflow.onrender.com/
 ### 📦 **React SDK:** https://www.npmjs.com/package/feature-flow-react-sdk
 
