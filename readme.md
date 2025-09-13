@@ -3,7 +3,6 @@
 
 ### 🌐 **Dashboard:** https://featureflow.onrender.com/
 ### 📦 **React SDK:** https://www.npmjs.com/package/feature-flow-react-sdk
-### 🔗 **GitHub:** [Your GitHub Repository here]
 
 ## 📖 What is Feature Flow?
 
