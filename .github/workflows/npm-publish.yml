@@ -33,7 +33,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           npm version patch -m "chore: bump version to %s [skip ci]"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/chetannn-github/feature-flow.git main --follow-tags
+          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/chetannn-github/feature-flow/tree/main/react-sdk.git main --follow-tags
 
       - name: Publish to NPM
         run:  npm publish --access public
