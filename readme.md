@@ -8,6 +8,7 @@
 
 Feature Flow is a self-hosted feature flag management system that helps developers control, test, and deploy features in their applications without needing to redeploy code.
 
+
 It allows you to:
 ✔ Manage configurations for multiple environments
 ✔ Enable or disable features in real-time
