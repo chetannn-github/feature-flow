@@ -9,18 +9,18 @@
 Feature Flow is a self-hosted feature flag management system that helps developers control, test, and deploy features in their applications without needing to redeploy code.
 
 
-It allows you to:
-✔ Manage configurations for multiple environments
-✔ Enable or disable features in real-time
-✔ Safely rollout or rollback features in production
-✔ Integrate easily into React applications using the provided SDK
+It allows you to:<br>
+✔ Manage configurations for multiple environments <br>
+✔ Enable or disable features in real-time <br>
+✔ Safely rollout or rollback features in production <br>
+✔ Integrate easily into React applications using the provided SDK <br>
 
 ## 🚀 Who should use it?
 
-This platform is for:
-✔ Developers managing feature toggles
-✔ Teams requiring environment-specific configurations
-✔ Organizations that want controlled rollouts and testing in production
+This platform is for: <br>
+✔ Developers managing feature toggles<br>
+✔ Teams requiring environment-specific configurations<br>
+✔ Organizations that want controlled rollouts and testing in production<br>
 
 ### Dashboard View
 ![Dashboard](https://github.com/chetannn-github/feature-flow/raw/main/public/dashboard.png)
