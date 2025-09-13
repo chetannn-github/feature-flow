@@ -87,7 +87,6 @@ Use it to fetch environment data easily. Example usage is detailed in the SDK do
 ✔ Avoid multiple code deployments  
 ✔ Separate configurations from the codebase  
 ✔ Roll out changes gradually or instantly  
-✔ Scale easily with MongoDB
 
 ## 📦 Example Use Cases
 
