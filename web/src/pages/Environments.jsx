@@ -24,10 +24,10 @@ export default function Environments() {
   const [isAddingEnv, setIsAddingEnv] = useState(false);
   const [isRotatingKey, setIsRotatingKey] = useState(false);
   const [isEditingVariable, setIsEditingVariable] =  useState(false);
-  const [isTogglingVariable, setIsToggligVariable] = useState(false);
-  const [isDeletingVarible, setIsDeletingVarible] = useState(false);
+  const [isTogglingVariable, setIsToggligVariable] = useState(null);
+  const [isDeletingVariable, setIsDeletingVariable] = useState(null);
   const [isDeletingProject, setIsDeletingProject] = useState(false);
-  const [isDeletingEnv, setIsDeletingEnv] = useState(false);
+  const [isDeletingEnv, setIsDeletingEnv] = useState(null);
 
 
 
@@ -59,14 +59,14 @@ function openDeleteEnvDialog(envId) {
   setConfirmDescription("Are you sure you want to delete this environment? This action cannot be undone.");
   setConfirmAction(() => async () => {
     try {
-      setIsDeletingEnv(true);
+      setIsDeletingEnv(envId);
       await api.del(`/api/environments/${envId}`, token);
       setEnvs((prev) => prev.filter((e) => e._id !== envId));
       if (selectedEnv === envId) setSelectedEnv(null);
     } catch (error) {
       
     } finally {
-      setIsDeletingEnv(false);
+      setIsDeletingEnv(null);
     }
   });
   setConfirmOpen(true);
@@ -79,14 +79,14 @@ function openDeleteVariableDialog(envId, key) {
   setConfirmDescription(`Are you sure you want to delete the variable "${key}"? This action cannot be undone.`);
   setConfirmAction(() => async () => {
     try {
-        setIsDeletingVarible(true);
+        setIsDeletingVariable(key);
       await api.del(`/api/environments/${envId}/data/${key}`, token);
       const res = await api.get(`/api/environments/${envId}/data`, token);
       setEnvData((prev) => ({ ...prev, [envId]: res }));
     } catch (error) {
       
     } finally {
-      setIsDeletingVarible(false)
+      setIsDeletingVariable(null)
     }
    
   });
@@ -207,7 +207,8 @@ function openDeleteProjectDialog() {
 
   // 🔹 Change status active/inactive
   async function changeStatus(envId, key, currentStatus) {
-    setIsToggligVariable(true);
+    if(isTogglingVariable) return;
+    setIsToggligVariable(key);
     try {
       await api.patch(`/api/environments/${envId}/data/${key}/status`, token);
       const res = await api.get(`/api/environments/${envId}/data`, token);
@@ -215,7 +216,7 @@ function openDeleteProjectDialog() {
     } catch (error) {
       
     } finally {
-      setIsToggligVariable(false);
+      setIsToggligVariable(null);
     }
     
   }
@@ -353,8 +354,8 @@ function openDeleteProjectDialog() {
                       )}
                     </Button>
                     <Button onClick={() => openDeleteEnvDialog(env._id)} variant="destructive" size="sm" className="gap-2">
-                      {!isDeletingEnv && <><Trash2 className="w-4 h-4" /> Delete</>}
-                      {isDeletingEnv && <><Loader2 className="w-4 h-4 animate-spin" /> Deleting Env</>}
+                      {isDeletingEnv !== env._id && <><Trash2 className="w-4 h-4" /> Delete</>}
+                      {isDeletingEnv === env._id && <><Loader2 className="w-4 h-4 animate-spin" /> Deleting Env..</>}
 
                     </Button>
                   </div>
@@ -435,7 +436,7 @@ function openDeleteProjectDialog() {
                                       onClick={() => changeStatus(env._id, k, v.status)}
                                       
                                     >
-                                      {isTogglingVariable && <Loader2 className="animate-spin h-4 w-4 mr-1"></Loader2>}
+                                      {isTogglingVariable === k && <Loader2 className="animate-spin h-4 w-4 mr-1"></Loader2>}
                                       {v.status}
                                       
                                     </Badge>
@@ -446,7 +447,8 @@ function openDeleteProjectDialog() {
                                       size="sm"
                                       className="text-destructive hover:text-destructive gap-2"
                                     >
-                                      <Trash2 className="w-4 h-4" />
+                                      {isDeletingVariable === k && <><Loader2 className="w-4 h-4 animate-spin" /> Deleting...</>}
+                                      {isDeletingVariable !== k && <Trash2 className="w-4 h-4" />}
                                     </Button>
                                   </div>
                                 </div>
