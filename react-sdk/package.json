@@ -1,6 +1,6 @@
 {
   "name": "feature-flow-react-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Feature Flow React SDK for fetching data using API key",
   "main": "index.js",
   "type": "module",
