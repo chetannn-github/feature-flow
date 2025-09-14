@@ -28,12 +28,12 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-10">
       <div className="max-w-4xl mx-auto px-4">
-        {/* Header */}
+
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Your Projects</h1>
-          <Link to="/projects">
+          <h1 className="text-xl md:text-3xl font-extrabold tracking-tight text-foreground">Your Projects</h1>
+          <Link to="/projects" className='text-sm'>
             <Button className="bg-primary hover:bg-primary/90">
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-3 mr-2" />
               Create Project
             </Button>
           </Link>
@@ -54,6 +54,7 @@ export default function Dashboard() {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {projects.list.map(p => (
+            <Link to={`/projects/${p._id}/environments`} className="flex-1">
             <Card
               key={p._id}
               className="flex flex-col justify-between h-48 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] border-border bg-card"
@@ -70,13 +71,14 @@ export default function Dashboard() {
                   <p>Created: {formatDate(p.createdAt)}</p>
                 </div>
 
-                <Link to={`/projects/${p._id}/environments`} className="flex-1">
+                
                   <Button variant="outline" size="sm" className="w-full">
                     Open
                   </Button>
-                </Link>
+                
               </CardContent>
             </Card>
+            </Link>
           ))}
 
           {/* Empty State */}
