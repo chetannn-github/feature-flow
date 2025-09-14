@@ -22,7 +22,7 @@ import ConfirmDialog from "../components/ui/confirm-dialog";
 export default function Environments() {
   const [isAddingVariable, setIsAddingVariable] = useState(false);
   const [isAddingEnv, setIsAddingEnv] = useState(false);
-  const [isRotatingKey, setIsRotatingKey] = useState(false);
+  const [isRotatingKey, setIsRotatingKey] = useState(null);
   const [isEditingVariable, setIsEditingVariable] =  useState(false);
   const [isTogglingVariable, setIsToggligVariable] = useState(null);
   const [isDeletingVariable, setIsDeletingVariable] = useState(null);
@@ -148,14 +148,14 @@ function openDeleteProjectDialog() {
   // 🔹 Rotate Key
   async function rotate(envId) {
     if(isRotatingKey) return;
-    setIsRotatingKey(true);
+    setIsRotatingKey(envId);
     try {
       const res = await api.post(`/api/environments/${envId}/rotate-key`, {}, token);
       setRotatedKey(res.apiKey);
     } catch (error) {
       
     }finally {
-      setIsRotatingKey(false);
+      setIsRotatingKey(null);
     }
     
   }
@@ -339,8 +339,8 @@ function openDeleteProjectDialog() {
                   </div>
                   <div className="flex gap-2 flex-row flex-wrap">
                     <Button onClick={() => rotate(env._id)} variant="outline" size="sm" className="gap-2">
-                      {isRotatingKey && <><RotateCcw className="w-4 h-4 animate-spin" /> Rotate Key </>}
-                      {!isRotatingKey && <><RotateCcw className="w-4 h-4" /> Rotate Key </>}
+                      {isRotatingKey === env._id && <><RotateCcw className="w-4 h-4 animate-spin" /> Rotating Key </>}
+                      {isRotatingKey !== env._id && <><RotateCcw className="w-4 h-4" /> Rotate Key </>}
                     </Button>
                     <Button onClick={() => toggleEnv(env._id)} variant="outline" size="sm" className="gap-2">
                       {selectedEnv === env._id ? (
