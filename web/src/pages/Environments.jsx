@@ -13,12 +13,24 @@ import { Badge } from "../components/ui/badge";
 import { Separator } from "../components/ui/separator";
 import { 
   Trash2, RotateCcw, Eye, EyeOff, Plus, Edit, Save, X, Copy, Database, 
-  Check
+  Check,
+  Loader2
 } from "lucide-react";
 
 import ConfirmDialog from "../components/ui/confirm-dialog";
 
 export default function Environments() {
+  const [isAddingVariable, setIsAddingVariable] = useState(false);
+  const [isAddingEnv, setIsAddingEnv] = useState(false);
+  const [isRotatingKey, setIsRotatingKey] = useState(false);
+  const [isEditingVariable, setIsEditingVariable] =  useState(false);
+  const [isTogglingVariable, setIsToggligVariable] = useState(false);
+  const [isDeletingVarible, setIsDeletingVarible] = useState(false);
+  const [isDeletingProject, setIsDeletingProject] = useState(false);
+  const [isDeletingEnv, setIsDeletingEnv] = useState(false);
+
+
+
   const { projectId } = useParams();
   const navigate = useNavigate();
   const token = useSelector((s) => s.auth.token);
@@ -36,43 +48,47 @@ export default function Environments() {
 
 
   const [confirmOpen, setConfirmOpen] = useState(false);
-const [confirmTitle, setConfirmTitle] = useState("");
-const [confirmDescription, setConfirmDescription] = useState("");
-const [confirmAction, setConfirmAction] = useState(() => () => {});
+  const [confirmTitle, setConfirmTitle] = useState("");
+  const [confirmDescription, setConfirmDescription] = useState("");
+  const [confirmAction, setConfirmAction] = useState(() => () => {});
 
 
 function openDeleteEnvDialog(envId) {
+  
   setConfirmTitle("Delete Environment");
   setConfirmDescription("Are you sure you want to delete this environment? This action cannot be undone.");
   setConfirmAction(() => async () => {
-    await api.del(`/api/environments/${envId}`, token);
-    setEnvs((prev) => prev.filter((e) => e._id !== envId));
-    if (selectedEnv === envId) setSelectedEnv(null);
+    try {
+      setIsDeletingEnv(true);
+      await api.del(`/api/environments/${envId}`, token);
+      setEnvs((prev) => prev.filter((e) => e._id !== envId));
+      if (selectedEnv === envId) setSelectedEnv(null);
+    } catch (error) {
+      
+    } finally {
+      setIsDeletingEnv(false);
+    }
   });
   setConfirmOpen(true);
 }
 
 
 function openDeleteVariableDialog(envId, key) {
+
   setConfirmTitle("Delete Variable");
   setConfirmDescription(`Are you sure you want to delete the variable "${key}"? This action cannot be undone.`);
   setConfirmAction(() => async () => {
-    await api.del(`/api/environments/${envId}/data/${key}`, token);
-    const res = await api.get(`/api/environments/${envId}/data`, token);
-    setEnvData((prev) => ({ ...prev, [envId]: res }));
-  });
-  setConfirmOpen(true);
-}
-
-
-
-function openDeleteVariableDialog(envId, key) {
-  setConfirmTitle("Delete Variable");
-  setConfirmDescription(`Are you sure you want to delete the variable "${key}"? This action cannot be undone.`);
-  setConfirmAction(() => async () => {
-    await api.del(`/api/environments/${envId}/data/${key}`, token);
-    const res = await api.get(`/api/environments/${envId}/data`, token);
-    setEnvData((prev) => ({ ...prev, [envId]: res }));
+    try {
+        setIsDeletingVarible(true);
+      await api.del(`/api/environments/${envId}/data/${key}`, token);
+      const res = await api.get(`/api/environments/${envId}/data`, token);
+      setEnvData((prev) => ({ ...prev, [envId]: res }));
+    } catch (error) {
+      
+    } finally {
+      setIsDeletingVarible(false)
+    }
+   
   });
   setConfirmOpen(true);
 }
@@ -82,8 +98,16 @@ function openDeleteProjectDialog() {
   setConfirmTitle("Delete Project");
   setConfirmDescription("Are you sure you want to delete this project? This action cannot be undone.");
   setConfirmAction(() => async () => {
-    await api.del(`/api/projects/${projectId}`, token);
-    navigate("/dashboard");
+    try {
+      setIsDeletingProject(true)
+      await api.del(`/api/projects/${projectId}`, token);
+      navigate("/dashboard");
+    } catch (error) {
+      
+    } finally {
+      setIsDeletingProject(false)
+    }
+   
   });
   setConfirmOpen(true);
 }
@@ -101,20 +125,39 @@ function openDeleteProjectDialog() {
 
   // 🔹 Create environment
   async function createEnv(e) {
+    if(isAddingEnv) return;
     e.preventDefault();
-    const res = await api.post(
+    setIsAddingEnv(true)
+
+    try {
+      const res = await api.post(
       `/api/projects/${projectId}/environments`,
       { name },
       token
     );
     setEnvs((prev) => [res, ...prev]);
-    setName("");
+    } catch (error) {
+       setName("");
+    } finally {
+      setIsAddingEnv(false)
+    }
+    
+   
   }
 
   // 🔹 Rotate Key
   async function rotate(envId) {
-    const res = await api.post(`/api/environments/${envId}/rotate-key`, {}, token);
-    setRotatedKey(res.apiKey);
+    if(isRotatingKey) return;
+    setIsRotatingKey(true);
+    try {
+      const res = await api.post(`/api/environments/${envId}/rotate-key`, {}, token);
+      setRotatedKey(res.apiKey);
+    } catch (error) {
+      
+    }finally {
+      setIsRotatingKey(false);
+    }
+    
   }
 
   // 🔹 Toggle environment data
@@ -130,58 +173,79 @@ function openDeleteProjectDialog() {
 
   // 🔹 Add / Update variable
   async function upsert() {
+    if(isAddingVariable) return;
+    
     if (!selectedEnv) return;
+    setIsAddingVariable(true)
     let parsed;
     try {
       parsed = JSON.parse(dataValue);
     } catch {
       parsed = dataValue;
     }
-
-    await api.post(
+    
+    try {
+      await api.post(
       `/api/environments/${selectedEnv}/data`,
       { key: dataKey, value: parsed },
       token
     );
+    } catch (error) {
+      
+    } finally {
+      setDataKey("");
+      setDataValue("");
+      setIsAddingVariable(false)
+    }
+    
 
     const res = await api.get(`/api/environments/${selectedEnv}/data`, token);
     setEnvData((prev) => ({ ...prev, [selectedEnv]: res }));
 
-    setDataKey("");
-    setDataValue("");
+    
   }
 
   // 🔹 Change status active/inactive
   async function changeStatus(envId, key, currentStatus) {
-    await api.patch(`/api/environments/${envId}/data/${key}/status`, token);
-    const res = await api.get(`/api/environments/${envId}/data`, token);
-    setEnvData((prev) => ({ ...prev, [envId]: res }));
+    setIsToggligVariable(true);
+    try {
+      await api.patch(`/api/environments/${envId}/data/${key}/status`, token);
+      const res = await api.get(`/api/environments/${envId}/data`, token);
+      setEnvData((prev) => ({ ...prev, [envId]: res }));
+    } catch (error) {
+      
+    } finally {
+      setIsToggligVariable(false);
+    }
+    
   }
 
   // 🔹 Save edited variable
   async function saveEdit(envId, key) {
+    if(isEditingVariable) return;
+    setIsEditingVariable(true);
     let parsed;
     try {
       parsed = JSON.parse(editValue);
     } catch {
       parsed = editValue;
+    } 
+
+    try {
+      await api.put(`/api/environments/${envId}/data/${key}`,{ value: parsed },token);
+      const res = await api.get(`/api/environments/${envId}/data`, token);
+      setEnvData((prev) => ({ ...prev, [envId]: res }));
+    } catch (error) {
+      
+    } finally {
+       setEditKey(null);
+      setEditValue("");
+      setIsEditingVariable(false)
     }
-
-    await api.put(
-      `/api/environments/${envId}/data/${key}`,
-      { value: parsed },
-      token
-    );
-    const res = await api.get(`/api/environments/${envId}/data`, token);
-    setEnvData((prev) => ({ ...prev, [envId]: res }));
-
-    setEditKey(null);
-    setEditValue("");
+   
   }
 
   
- 
-
   // 🔹 Copy rotated key
   function copyKey() {
     if (rotatedKey) {
@@ -207,9 +271,12 @@ function openDeleteProjectDialog() {
             </p>
           </div>
           <Button onClick={openDeleteProjectDialog} variant="destructive" className="gap-2">
-            <Trash2 className="w-4 h-4" />
-            Delete Project
+            {isDeletingProject && <><Loader2 className="w-4 h-4 animate-spin" />Deleting Project</>}
+            {!isDeletingProject && <><Trash2 className="w-4 h-4" /> Delete Project</>}
+
+
           </Button>
+          
         </div>
 
         {/* Rotated API Key Alert */}
@@ -249,9 +316,11 @@ function openDeleteProjectDialog() {
                 placeholder="Environment name (e.g., Development, Staging, Production)"
                 className="flex-1 placeholder:text-xs md:placeholder:text-md"
               />
+
+              
               <Button type="submit" className="gap-2">
-                <Plus className="w-4 h-4" />
-                Create
+                {isAddingEnv && <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Creating Environment..</> }
+                {!isAddingEnv && <><Plus className="h-5 w-5" /> Create</>}
               </Button>
             </form>
           </CardContent>
@@ -269,8 +338,8 @@ function openDeleteProjectDialog() {
                   </div>
                   <div className="flex gap-2 flex-row flex-wrap">
                     <Button onClick={() => rotate(env._id)} variant="outline" size="sm" className="gap-2">
-                      <RotateCcw className="w-4 h-4" />
-                      Rotate Key
+                      {isRotatingKey && <><RotateCcw className="w-4 h-4 animate-spin" /> Rotate Key </>}
+                      {!isRotatingKey && <><RotateCcw className="w-4 h-4" /> Rotate Key </>}
                     </Button>
                     <Button onClick={() => toggleEnv(env._id)} variant="outline" size="sm" className="gap-2">
                       {selectedEnv === env._id ? (
@@ -284,7 +353,9 @@ function openDeleteProjectDialog() {
                       )}
                     </Button>
                     <Button onClick={() => openDeleteEnvDialog(env._id)} variant="destructive" size="sm" className="gap-2">
-                      <Trash2 className="w-4 h-4" /> Delete
+                      {!isDeletingEnv && <><Trash2 className="w-4 h-4" /> Delete</>}
+                      {isDeletingEnv && <><Loader2 className="w-4 h-4 animate-spin" /> Deleting Env</>}
+
                     </Button>
                   </div>
                 </div>
@@ -315,9 +386,10 @@ function openDeleteProjectDialog() {
                                     placeholder="Enter JSON value"
                                   />
                                   <Button onClick={() => saveEdit(env._id, k)} size="sm" className="gap-2">
-                                    <Save className="w-4 h-4" /> Save
+                                    {!isEditingVariable && <><Save className="w-4 h-4" /> Save</>}
+                                    {isEditingVariable && <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>}
                                   </Button>
-                                  <Button onClick={() => setEditKey(null)} variant="outline" size="sm" className="gap-2">
+                                  <Button onClick={() => {setEditKey(null);}} variant="outline" size="sm" className="gap-2">
                                     <X className="w-4 h-4" /> Cancel
                                   </Button>
                                 </div>
@@ -352,6 +424,7 @@ function openDeleteProjectDialog() {
                                     >
                                       <Edit className="w-4 h-4" /> Edit
                                     </Button>
+
                                     <Badge
                                       variant={v.status === "active" ? "default" : "secondary"}
                                       className={`cursor-pointer ${
@@ -360,9 +433,13 @@ function openDeleteProjectDialog() {
                                           : "bg-gray-400 hover:bg-gray-500"
                                       }`}
                                       onClick={() => changeStatus(env._id, k, v.status)}
+                                      
                                     >
+                                      {isTogglingVariable && <Loader2 className="animate-spin h-4 w-4 mr-1"></Loader2>}
                                       {v.status}
+                                      
                                     </Badge>
+
                                     <Button
                                      onClick={() => openDeleteVariableDialog(env._id, k)}
                                       variant="ghost"
@@ -407,7 +484,9 @@ function openDeleteProjectDialog() {
                             className="flex-1 w-full lg:w-1/3 placeholder:text-xs md:placeholder:text-md"
                           />
                           <Button onClick={upsert} className="gap-2">
-                            <Plus className="w-4 h-4" /> Add Variable
+                            
+                          {isAddingVariable && <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Adding Variable..</> }
+                            {!isAddingVariable &&<><Plus className="w-4 h-4" /> Add Variable</>}
                           </Button>
                         </div>
                       </CardContent>
