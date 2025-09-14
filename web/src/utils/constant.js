@@ -1,5 +1,5 @@
 export const REACT_SDK_USAGE_CODE = `import React from "react";
-import useFeatureFlow from "feature-flow-sdk";
+import {useFeatureFlow}  from 'feature-flow-react-sdk';
 
 export default function App() {
   const { data, loading, error } = useFeatureFlow("YOUR_API_KEY");
@@ -10,14 +10,11 @@ export default function App() {
   return (
     <div>
       <h1>FeatureFlow Data</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      
-      {data.DARK_MODE && (
-        <DarkModeToggle />
-      )}
+      <pre>{JSON.stringify(data)}</pre>
     </div>
   );
-}`;
+}
+`;
 
 export const SAMPLE_API_RESPONSE = `// useFeatureFlow returns 
 {
