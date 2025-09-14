@@ -34,7 +34,7 @@ function App() {
 
 function ProtectedRoute({ children }) {
   const token = useSelector(s => s.auth.token)
-  if (!token) return <Navigate to='/' />
+  if (!token) return <Navigate to='/sign-in' />
   return children
 }
 
