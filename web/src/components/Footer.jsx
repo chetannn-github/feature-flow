@@ -16,11 +16,11 @@ const Footer = () => {
               Self-hosted feature flag management platform built with the MERN stack.
             </p>
             <div className="flex gap-4">
-              <a href="https://github.com/chetannn-github/" className="text-muted-foreground hover:text-red-500 transition-colors">
+              <a href="https://github.com/chetannn-github/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-red-500 transition-colors">
                 <Github className="h-5 w-5" />
               </a>
               
-              <a href="https://www.linkedin.com/in/chetannn/" className="text-muted-foreground hover:text-blue-800 transition-colors">
+              <a href="https://www.linkedin.com/in/chetannn/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-blue-800 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -29,7 +29,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-semibold">Contact</h3>
             <ul className="space-y-2">
-              <li><a href="mailto:chetan.rajawat25@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors">Email Us</a></li>
+              <li><a href="mailto:chetan.rajawat25@gmail.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Email Us : chetan.rajawat@gmail.com</a></li>
             </ul>
           </div>
         </div>

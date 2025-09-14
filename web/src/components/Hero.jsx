@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroImg from "../assets/hero.jpg"
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -15,29 +16,28 @@ const Hero = () => {
                 <span className="block text-accent-foreground">Made Simple</span>
               </h1>
               <p className="text-xl text-primary-foreground/90 lg:max-w-lg">
-                Self-hosted feature flag management with MongoDB storage, React SDK, and secure API key management. Toggle features without redeployments.
+                Feature flag management with MongoDB storage, React SDK, and secure API key management. Toggle features without redeployments.
               </p>
             </div>
             
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button size="lg" variant="secondary" className="group">
-                Get Started
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button size="lg" variant="outline" className="group border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                <Play className="mr-2 h-4 w-4" />
-                View Demo
-              </Button>
+              <Link to={"/dashboard"}>
+                <Button size="lg" variant="secondary" className="group">
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              
             </div>
 
             <div className="flex items-center gap-8 pt-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-foreground">100%</div>
-                <div className="text-sm text-primary-foreground/70">Self-hosted</div>
+                <div className="text-2xl font-bold text-primary-foreground">Easy</div>
+                <div className="text-sm text-primary-foreground/70">Integration</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-foreground">Zero</div>
-                <div className="text-sm text-primary-foreground/70">Downtime</div>
+                <div className="text-2xl font-bold text-primary-foreground">Fast</div>
+                <div className="text-sm text-primary-foreground/70">Shipping</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary-foreground">React</div>
