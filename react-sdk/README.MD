@@ -1,7 +1,6 @@
 # 📦 FeatureFlow SDK
 
 A simple **React SDK** to fetch FeatureFlow data using your environment API key.
-
 ---
 
 ## 🚀 Installation
