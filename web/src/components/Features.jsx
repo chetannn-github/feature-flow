@@ -37,9 +37,9 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 bg-none">
           {features.map((feature, index) => (
-            <Card key={index} className="border-0 bg-gradient-card shadow-soft hover:shadow-medium transition-all duration-300 group">
+            <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-all duration-300 group">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <feature.icon className="h-8 w-8 text-red" />
